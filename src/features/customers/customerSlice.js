@@ -1,73 +1,71 @@
 
-//we will import the reducers in the store and the action creator functions in the components where we want to dispatch the actions
+// //we will import the reducers in the store and the action creator functions in the components where we want to dispatch the actions
 
 
-const initialStateCustomer = {
+// const initialStateCustomer = {
 
-  fullName : "Penaldo",
-  nationalId : "nish4919",
-  createdAt : ""
-}
-
-
-export default function customerReducer(state = initialStateCustomer,action)
-{
+//   fullName : "Penaldo",
+//   nationalId : "nish4919",
+//   createdAt : ""
+// }
 
 
-   switch(action.type)
-   {
+// export default function customerReducer(state = initialStateCustomer,action)
+// {
 
-     case "customer/create":
+//    switch(action.type)
+//    {
 
-     return {...state,fullName : action.payload.fullName,nationalId : action.payload.nationalId,createdAt : new Date()}
-
-
-    case "account/update":
-
-    return {...state,fullName : action.payload}
+//      case "customer/create":
+//      return {...state,fullName : action.payload.fullName,nationalId : action.payload.nationalId,createdAt : new Date()}
 
 
-    default :
-    return state
+//     case "account/update":
+
+//     return {...state,fullName : action.payload}
 
 
-   }
+//     default :
+//     return state
+
+
+//    }
 
 
 
 
-}
+// }
 
 
-export function createCustomer(fullName,nationalId)
-{
+// export function createCustomer(fullName,nationalId)
+// {
 
 
-   return {
+//    return {
 
-     type : "customer/create",
+//      type : "customer/create",
 
-     payload : {
-      fullName,
-      nationalId
-     }
+//      payload : {
+//       fullName,
+//       nationalId
+//      }
  
 
-   }
+//    }
 
 
-}
+// }
 
-export function updateCustomer(fullName)
-{
+// export function updateCustomer(fullName)
+// {
 
-  return {
-     type : "customer/update",
-     payload : fullName
-  }
+//   return {
+//      type : "customer/update",
+//      payload : fullName
+//   }
 
 
-}
+// }
 
 
 

@@ -21,15 +21,24 @@ const accountSlice = createSlice({
       state.balance -= Number(action.payload);
     },
 
-    requestLoan(state,action)
-    {
-
-       const loanAmount = Number(action.payload.loanAmount)
-       const loanPurpose = action.payload.loanPurpose
-       state.balance += loanAmount
-       state.loan = loanAmount
-       state.loanPurpose = loanPurpose
-    } ,
+    requestLoan: {
+      prepare(loanAmount, loanPurpose) {
+        return {
+          payload: {
+            loanAmount,
+            loanPurpose,
+          },
+        };
+      },
+rpos
+      reducer(state, action) {
+        const loanAmount = Number(action.payload.loanAmount);
+        const loanPurpose = action.payload.loanPurpose;
+        state.balance += loanAmount;
+        state.loan = loanAmount;
+        state.loanPurpose = loanPue;
+      },
+    },
 
     payLoan(state) {
       state.loan = 0;
@@ -38,40 +47,26 @@ const accountSlice = createSlice({
   },
 });
 
-
 export const { withdraw, requestLoan, payLoan } = accountSlice.actions;
 
-export function deposit(amount,currency)
-{
+export function deposit(amount, currency) {
+  if (currency === "USD")
+    return {
+      type: "account/deposit",
+      payload: amount,
+    };
 
-   if(currency === "USD")
-      return {
-   
-        type : "account/deposit",
-        payload : amount
+  return async function fetchData(dispatch, getState) {
+    const response = await fetch(
+      `https://api.frankfurter.app/latest?base=${currency}&symbols=USD`
+    );
 
-      }
+    const json = await response.json();
 
-    
-      return async function fetchData(dispatch,getState)
-      {
-  
-           const response = await fetch(
-             `https://api.frankfurter.app/latest?base=${currency}&symbols=USD`
-           );
+    const convertedCurrency = (amount * json.rates.USD).toFixed(2);
 
-           const json = await response.json()
-
-
-           const convertedCurrency = (amount*(json.rates.USD)).toFixed(2)
-
-
-           dispatch(accountSlice.actions.deposit(convertedCurrency))
-
-
-      }
-
-
+    dispatch(accountSlice.actions.deposit(convertedCurrency));
+  };
 }
 
 export default accountSlice.reducer;
